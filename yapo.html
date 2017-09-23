@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+h1 span {
+  font: 18px Monaco, MonoSpace;
+  height: 300px;
+  position: absolute;
+  width: 20px;
+  left: 50%;
+  top: 10%;
+  transform-origin: bottom center;
+}
+
+#insideCircle{
+	position: absolute;;
+	left: 36%;
+	top : 20%;
+	height:30vw;
+	width: 30vw;
+	border-radius: 50%;
+	background-image: url("https://scontent-lax3-1.xx.fbcdn.net/v/t1.0-9/15036311_321718271535981_2123971902979758683_n.jpg?oh=ae162d968d22dd9f43b554dfda1f71f3&oe=5A3B8781");
+}
+
+h2{
+	margin-top: 11.5vw;
+	font-size: 8vw;
+	text-align:center;
+	color:white;
+	font-family: Monaco;
+}
+
+span:hover: {
+	color: white;
+	background-color: black;
+}
+
+
+</style>
+</head>
+<body onload = "loading(0,12)">
+
+<h1 id='mycontent'></h1>
+
+<div id = 'insideCircle' onclick = 'loading(0,12)'><h2>2017</h2></div>
+
+</body>
+<script>
+	month = ['January','Feburary','March','April','May','June','July','August','September','October','November','December']
+	monthToDate = {'January':31,'Feburary':28,'March':31,'April':30,'May':31,'June':30,'July':31,'August':31,'September':30,'October':31,'November':30,'December':31}
+	monthToIndex = {'January':1,'Feburary':2,'March':3,'April':4,'May':5,'June':6,'July':7,'August':8,'September':9,'October':10,'November':11,'December':12}
+
+	function makeBlack(idname){
+		document.getElementById(idname).style.backgroundColor = 'black'
+		document.getElementById(idname).style.color = 'white'
+	}
+
+	function loading(startMonth,endMonth){
+		document.getElementById('mycontent').innerHTML = ''
+		deg = 0
+		for(var i=startMonth; i<endMonth; i++)
+		{
+			document.getElementById('mycontent').innerHTML += '\<a id\=\"char'+month[i]+'\" onclick\=\"loadTheMonth(this.id)" \>\<\/a\>'
+			loadMonth(i)
+		}
+	}
+
+	function loadMonth(inMonth){
+		var monthName = month[inMonth]
+		var deg = inMonth*30
+
+		for(var i=0; i<monthName.length; i++)
+		{
+			document.getElementById('char'+monthName).innerHTML += '\<span id\=\"char'+monthName+i.toString()+'\"\>'+monthName[i]+'\<\/span\>'
+			document.getElementById('char'+monthName+i.toString()).style.transform = "rotate("+deg.toString()+"deg)"
+			deg+=3
+		}
+	}
+
+	function loadTheMonth(thisid){
+		document.getElementById('mycontent').innerHTML = ''
+		monthName = thisid.substring(4,thisid.length)
+		monthLength = monthToDate[monthName]
+		monthIndex = monthToIndex[monthName]
+
+		loading(monthIndex-1,monthIndex)
+		loadDates(monthLength,monthIndex)
+	}
+
+	function loadDates(mlength,mIndex){
+		deg = mIndex*30
+		for(var i = 1; i<mlength+1; i++)
+		{
+			document.getElementById('mycontent').innerHTML += '\<span id\=\"char'+i.toString()+'\"\>'+i.toString()+'\<\/span\>'
+			document.getElementById('char'+i.toString()).style.transform = "rotate("+deg.toString()+"deg)"
+			deg+=300/mlength
+		}
+	}
+</script>
+</html>
+
+
